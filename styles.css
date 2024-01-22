@@ -3,34 +3,21 @@
     font-family: system-ui, Roboto;
 }
 
-body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     margin: 0px;
+    padding: 0px;
     background-color: #16104a;
     color: white;
 }
 
 /* BANNERS */
-.main-banner, .sub-banner {
+.main-header, .sub-header {
     text-align: center;
     margin: 0px;
     padding-bottom: 10px;
 }
 
-.round-banner {
-    text-align: center;
-}
-
 /* LABELS */
-.round-winner-label {
-    text-align: center;
-}
-
 .mode-label {
     font-size: 18px;
 }
@@ -42,10 +29,6 @@ body {
 
 .game-winner-label {
     margin: 0px;
-}
-
-.game-over-label {
-    text-align: center;
 }
 
 /* CONTAINERS */
@@ -122,6 +105,10 @@ body {
 }
 
 /* QUICK METHODS */
+.center-text {
+    text-align: center;
+}
+
 .rps-icon-resize {
     height: 90px;
     width: 90px;

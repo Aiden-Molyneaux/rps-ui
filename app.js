@@ -1,40 +1,45 @@
-let num_rounds = 0;
-let num_rounds_played = 0;
-let player_score = 0;
-let opponent_score = 0;
+class Game {
+    constructor() {
+        this.num_rounds = 0;
+        this.num_rounds_played = 0;
+        this.player_score = 0;
+        this.opponent_score = 0;
+    }
+}
+let game;
 
-// 
-let game_over_container = document.createElement('div');
-game_over_container.classList.add('game-over-label');
+// ELEMENT CREATION
+const game_over_container = document.createElement('div');
+game_over_container.classList.add('game-over-label', 'center-text');
 
-let game_over_label = document.createElement('h1');
+const game_over_label = document.createElement('h1');
 game_over_label.textContent = "GAME OVER!";
 
-let game_winner_label = document.createElement('h2');
+const game_winner_label = document.createElement('h2');
 game_winner_label.classList.add('game-winner-label');
 game_over_container.append(game_over_label, game_winner_label);
 
-let rock_button = document.createElement('button');
+const rock_button = document.createElement('button');
 rock_button.classList.add('game-button', 'rps-game-button', 'rock-button');
 rock_button.innerHTML = "<img src='./images/rock.png' class='rps-icon-resize'>";
 
-let paper_button = document.createElement('button');
+const paper_button = document.createElement('button');
 paper_button.classList.add('game-button', 'rps-game-button', 'paper-button');
 paper_button.innerHTML = "<img src='./images/paper.png' class='rps-icon-resize'>";
 
-let scissors_button = document.createElement('button');
+const scissors_button = document.createElement('button');
 scissors_button.classList.add('game-button', 'rps-game-button', 'scissors-button');
 scissors_button.innerHTML = "<img src='./images/scissors.png' class='rps-icon-resize'>";
 
-let rps_button_container = document.createElement('div');
+const rps_button_container = document.createElement('div');
 rps_button_container.classList.add('mode-button-container');
 rps_button_container.append(rock_button, paper_button, scissors_button);
 
-let restart_button = document.createElement('button');
+const restart_button = document.createElement('button');
 restart_button.textContent = 'Restart';
 restart_button.classList.add('restart-button');
 
-// EXISTING SELECTORS
+// QUERYING SELECTORS
 const game_container = document.querySelector('.center-container');
 const round_banner = document.querySelector('.round-banner');
 const opponent_score_label = document.querySelector('.opponent-score-label');
@@ -49,14 +54,15 @@ const game_button_1 = document.querySelector('.game-button-1');
 const game_button_2 = document.querySelector('.game-button-2');
 const game_button_3 = document.querySelector('.game-button-3');
 
-// EVENT LISTENER DECLARATIONS
-game_button_1.addEventListener('click', () => { playGame(1) });
-game_button_2.addEventListener('click', () => { playGame(5) });
-game_button_3.addEventListener('click', () => { playGame(1000) });
+// EVENT LISTENERS
+game_button_1.addEventListener('click', () => { startGame(1) });
+game_button_2.addEventListener('click', () => { startGame(5) });
+game_button_3.addEventListener('click', () => { startGame(1000) });
 
-rock_button.addEventListener('click', function() { playTurn('rock'); });
-paper_button.addEventListener('click', function() { playTurn('paper'); });
-scissors_button.addEventListener('click', function() { playTurn('scissors'); });
+rock_button.addEventListener('click', () => { playTurn('rock'); });
+paper_button.addEventListener('click', () => { playTurn('paper'); });
+scissors_button.addEventListener('click', () => { playTurn('scissors'); });
+
 restart_button.addEventListener('click', () => { resetGame(); });
 
 // ELEMENT CONSTRUCTORS
@@ -69,101 +75,99 @@ function getActionIcon(action) {
 }
 
 // MAIN FUNCTIONALITY
-function playGame(num_game_rounds) {
-    num_rounds = num_game_rounds;
+function startGame(num_game_rounds) {
+    game = new Game();
+    game.num_rounds = num_game_rounds;
     
-    changeRound();
+    updateRoundBanner();
+
     player_score_label.textContent = 'Your score: 0';
     opponent_score_label.textContent = "Opponent's score: 0";
+    mode_label.textContent = "Choose your move:";
 
     mode_button_container.replaceWith(rps_button_container);
-    mode_label.textContent = "Choose your move:";
     game_container.appendChild(restart_button);
 }
 
-function playTurn(action) {
+function playTurn(action) {    
     wipeTable();
 
     const player_action_icon = getActionIcon(action);
     player_action_icon_container.appendChild(player_action_icon);
 
-    const opponent_move = getComputerMove();
-    const opponent_action_icon = getActionIcon(opponent_move);
+    const opponent_action = getOpponentAction();
+    const opponent_action_icon = getActionIcon(opponent_action);
     opponent_action_icon_container.appendChild(opponent_action_icon);
-
-    result = determineWinner(action, opponent_move);
-    if (result == 1) {
-        num_rounds_played++;
+    
+    const winner = determineWinner(action, opponent_action);
+    if (winner == "Player") {
+        game.num_rounds_played++;
         round_winner_label.textContent = "You won!";
-        addScore(result);
+        addScore(winner);
 
-        isGameOver() ? endGame() : changeRound();
-    } else if (result == 0) {
-        num_rounds_played++;
+        isGameOver() ? endGame() : updateRoundBanner();
+    } else if (winner == "Opponent") {
+        game.num_rounds_played++;
         round_winner_label.textContent = "Opponent won!";
-        addScore(result);
+        addScore(winner);
 
-        isGameOver() ? endGame() : changeRound();
+        isGameOver() ? endGame() : updateRoundBanner();
     } else {
         round_winner_label.textContent = "Tie!";
     }
 }
 
-function changeRound() {
-    let round_counter = num_rounds == 1000 ? "∞" : num_rounds;
-    round_banner.textContent = `Round ${num_rounds_played+1} of ${round_counter}`;
+function determineWinner(player_action, opponent_action) {
+    // check for tie
+    if (player_action == opponent_action) { return "Tie"; }
+
+    if (player_action == "rock") { return opponent_action == "scissors" ? "Player" : "Opponent"; }
+    if (player_action == "paper") { return opponent_action == "rock" ? "Player" : "Opponent"; }
+    if (player_action == "scissors") { return opponent_action == "paper" ? "Player" : "Opponent"; }
+}
+
+function updateRoundBanner() {
+    const round_counter = game.num_rounds == 1000 ? "∞" : game.num_rounds;
+    round_banner.textContent = `Round ${game.num_rounds_played+1} of ${round_counter}`;
 }
 
 function isGameOver() {
-    return player_score == Math.ceil(num_rounds/2) || opponent_score == Math.ceil(num_rounds/2);
+    return game.player_score == Math.ceil(game.num_rounds/2) || game.opponent_score == Math.ceil(game.num_rounds/2);
 }
 
 function endGame() {
-    let winner_text = player_score > opponent_score 
+    game_winner_label.textContent = game.player_score > game.opponent_score 
         ? "Congratulations, you won the game!"
         : "Sorry, you lost the game :/";
 
     mode_label.textContent = "";
-    game_winner_label.textContent = winner_text;
 
     rps_button_container.replaceWith(game_over_container);
 }
 
-function getComputerMove() {
+function getOpponentAction() {
     const move_set = ['rock', 'paper', 'scissors'];
     const rand_num = Math.floor(Math.random() * 3);
     
     return move_set[rand_num];
 }
 
-function determineWinner(player_action, opponent_action) {
-    // check for tie
-    if (player_action == opponent_action) { return 2; }
-
-    // return 0 if player won, return 1 if computer won
-    if (player_action == "rock") { return opponent_action == "scissors" ? 1 : 0; }
-    if (player_action == "paper") { return opponent_action == "rock" ? 1 : 0; }
-    if (player_action == "scissors") { return opponent_action == "paper" ? 1 : 0; }
-}
-
-function addScore(player_won) {
-    if (player_won) {
-        player_score++;
-        player_score_label.textContent = `Your score: ${player_score}`;
+function addScore(winner) {
+    if (winner == "Player") {
+        game.player_score++;
+        player_score_label.textContent = `Your score: ${game.player_score}`;
     } else {
-        opponent_score++;
-        opponent_score_label.textContent = `Opponent's score: ${opponent_score}`;
+        game.opponent_score++;
+        opponent_score_label.textContent = `Opponent's score: ${game.opponent_score}`;
     }
 }
 
 function resetGame() {
-    num_rounds_played = num_rounds = player_score = opponent_score = 0;
+    const element_to_replace = document.querySelector('.game-over-label') !== null
+        ? document.querySelector('.game-over-label')
+        : rps_button_container;
 
-    try { 
-        document.querySelector('.game-over-label').replaceWith(mode_button_container); 
-    } catch(error) { 
-        rps_button_container.replaceWith(mode_button_container); 
-    }
+    element_to_replace.replaceWith(mode_button_container);
 
     restart_button.remove();
 
@@ -180,7 +184,7 @@ function resetLabels() {
 }
 
 function wipeTable() {
-    let icons_to_remove = document.querySelectorAll('.action-icon-resize');
+    const icons_to_remove = document.querySelectorAll('.action-icon-resize');
     icons_to_remove.forEach((icon) => {
         icon.remove();
     });
