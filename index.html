@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>Rock, Paper, Scissors</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <div class="main-container">
-        <header class="header-container">
-            <h1 class="main-header">Rock, Paper, Scissors</h1>
-            <h2 class="sub-header">It's GAME TIME</h2>
-        </header>
-        <h3 class="round-banner center-text"></h3>
-        <main class="game-container">
-            <h3 class="player-score-label"></h3>
+    <header class="header-container">
+        <h1 class="main-header">Rock, Paper, Scissors</h1>
+        <h2 class="sub-header">It's GAME TIME</h2>
+    </header>
+    <main class="main-container">
+        <h3 class="round-banner center-text">Your opponent waits patiently...</h3>
+        <img src="./images/opponent.png" class="head-icon">
+        <div class="game-container">
             <div class="center-container">
+                <h3 class="player-score-label"></h3>
                 <div class="table-container">
                     <div class="table-rounding">
                         <div class="opponent-action-icon-container"></div>
@@ -22,17 +24,20 @@
                         <div class="player-action-icon-container"></div>
                     </div>
                 </div>
-    
-                <h4 class="mode-label center-text">Choose a game mode:</h4>
-                <div class="mode-button-container">
-                    <button class="game-button game-button-1">1<br> Round</button>
-                    <button class="game-button game-button-2">Best<br> 3 of 5</button>
-                    <button class="game-button game-button-3">Until Death</button>
-                </div>
+                <h3 class="opponent-score-label"></h3>
             </div>
-            <h3 class="opponent-score-label"></h3>
-        </main>
-    </div>
-    <script src="app.js"></script>
+
+            <h4 class="mode-label center-text">Choose a game mode:</h4>
+            <div class="mode-button-container">
+                <button class="game-button game-button-1">1<br> Round</button>
+                <button class="game-button game-button-2">Best<br> 3 of 5</button>
+                <button class="game-button game-button-3">Until Death</button>
+            </div>            
+        </div>
+    </main>
+
+    <footer>
+        The Odin Project - Aiden Molyneaux 2024
+    </footer>
 </body>
 </html>

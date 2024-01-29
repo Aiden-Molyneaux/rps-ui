@@ -10,9 +10,10 @@ let game;
 
 // ELEMENT CREATION
 const game_over_container = document.createElement('div');
-game_over_container.classList.add('game-over-label', 'center-text');
+game_over_container.classList.add('game-over-container', 'center-text');
 
 const game_over_label = document.createElement('h1');
+game_over_label.classList.add('game-over-label');
 game_over_label.textContent = "GAME OVER!";
 
 const game_winner_label = document.createElement('h2');
@@ -40,13 +41,14 @@ restart_button.textContent = 'Restart';
 restart_button.classList.add('restart-button');
 
 // QUERYING SELECTORS
-const game_container = document.querySelector('.center-container');
+const center_container = document.querySelector('.center-container');
 const round_banner = document.querySelector('.round-banner');
 const opponent_score_label = document.querySelector('.opponent-score-label');
 const player_score_label = document.querySelector('.player-score-label');
 const opponent_action_icon_container = document.querySelector('.opponent-action-icon-container');
 const player_action_icon_container = document.querySelector('.player-action-icon-container');
 const round_winner_label = document.querySelector('.round-winner-label');
+const game_container = document.querySelector('.game-container');
 const table_container = document.querySelector('.table-container');
 const mode_label = document.querySelector('.mode-label');
 const mode_button_container = document.querySelector('.mode-button-container');
@@ -163,8 +165,8 @@ function addScore(winner) {
 }
 
 function resetGame() {
-    const element_to_replace = document.querySelector('.game-over-label') !== null
-        ? document.querySelector('.game-over-label')
+    const element_to_replace = document.querySelector('.game-over-container') !== null
+        ? document.querySelector('.game-over-container')
         : rps_button_container;
 
     element_to_replace.replaceWith(mode_button_container);
@@ -176,7 +178,7 @@ function resetGame() {
 }
 
 function resetLabels() {
-    round_banner.textContent = "";
+    round_banner.textContent = "Your opponent waits patiently...";
     mode_label.textContent = "Choose a game mode:";
     opponent_score_label.textContent = "";
     player_score_label.textContent = "";

@@ -4,6 +4,9 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0px;
     padding: 0px;
     background-color: #16104a;
@@ -27,7 +30,7 @@ body {
     padding: 50px;
 }
 
-.game-winner-label {
+.game-winner-label, .game-over-label {
     margin: 0px;
 }
 
@@ -35,7 +38,8 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    align-items: center;
+    flex: 1;
 }
 
 .header-container {
@@ -45,12 +49,12 @@ body {
 
 .game-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
 .center-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     flex: 1;
@@ -64,7 +68,7 @@ body {
     width: 200px;
     background-color: #47210c;
     border: 5px solid black;
-    border-radius: 30%;
+    border-radius: 100px;
     overflow: hidden;
 }
 
@@ -88,6 +92,14 @@ body {
     color: white;
     font-size: 18px;
     text-align: center;
+    border: 3px solid #4C4B63;
+    border-radius: 10px;
+}
+
+.game-button:hover {
+    background-color: #16104a;
+    border: 3px solid #4C4B63;
+    border-radius: 10px;
 }
 
 .rps-game-button {
@@ -102,6 +114,14 @@ body {
     background-color: #4C4B63;
     color: white;
     font-size: 18px;
+    border: 3px solid #4C4B63;
+    border-radius: 10px;
+}
+
+.restart-button:hover {
+    background-color: #16104a;
+    border: 3px solid #4C4B63;
+    border-radius: 10px;
 }
 
 /* QUICK METHODS */
@@ -119,8 +139,20 @@ body {
     width: 160px;
 }
 
+.head-icon {
+    height: 160px;
+    width: 113px;
+    padding-bottom: 25px;
+}
+
 /* OTHER */
 .table-container .table-rounding {
     border-radius: inherit;
     overflow: hidden;
+}
+
+footer {
+    padding: 5px;
+    background-color: black;
+    text-align: center;
 }
