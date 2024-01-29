@@ -9,17 +9,6 @@ class Game {
 let game;
 
 // ELEMENT CREATION
-const game_over_container = document.createElement('div');
-game_over_container.classList.add('game-over-container', 'center-text');
-
-const game_over_label = document.createElement('h1');
-game_over_label.classList.add('game-over-label');
-game_over_label.textContent = "GAME OVER!";
-
-const game_winner_label = document.createElement('h2');
-game_winner_label.classList.add('game-winner-label');
-game_over_container.append(game_over_label, game_winner_label);
-
 const rock_button = document.createElement('button');
 rock_button.classList.add('game-button', 'rps-game-button', 'rock-button');
 rock_button.innerHTML = "<img src='./images/rock.png' class='rps-icon-resize'>";
@@ -40,18 +29,31 @@ const restart_button = document.createElement('button');
 restart_button.textContent = 'Restart';
 restart_button.classList.add('restart-button');
 
+const game_over_container = document.createElement('div');
+game_over_container.classList.add('game-over-container', 'center-text');
+
+const game_over_label = document.createElement('h1');
+game_over_label.classList.add('game-over-label');
+game_over_label.textContent = "GAME OVER!";
+
+const game_winner_label = document.createElement('h2');
+game_winner_label.classList.add('game-winner-label');
+game_over_container.append(game_over_label, game_winner_label);
+
 // QUERYING SELECTORS
+const game_container = document.querySelector('.game-container');
 const center_container = document.querySelector('.center-container');
+const table_container = document.querySelector('.table-container');
+const mode_button_container = document.querySelector('.mode-button-container');
+const opponent_action_icon_container = document.querySelector('.opponent-action-icon-container');
+const player_action_icon_container = document.querySelector('.player-action-icon-container');
+
 const round_banner = document.querySelector('.round-banner');
 const opponent_score_label = document.querySelector('.opponent-score-label');
 const player_score_label = document.querySelector('.player-score-label');
-const opponent_action_icon_container = document.querySelector('.opponent-action-icon-container');
-const player_action_icon_container = document.querySelector('.player-action-icon-container');
 const round_winner_label = document.querySelector('.round-winner-label');
-const game_container = document.querySelector('.game-container');
-const table_container = document.querySelector('.table-container');
 const mode_label = document.querySelector('.mode-label');
-const mode_button_container = document.querySelector('.mode-button-container');
+
 const game_button_1 = document.querySelector('.game-button-1');
 const game_button_2 = document.querySelector('.game-button-2');
 const game_button_3 = document.querySelector('.game-button-3');
